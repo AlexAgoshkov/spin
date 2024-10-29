@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Breakfast with</title>
+  <style>
+    /* Basic styling */
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      background-color: #f0f8ff;
+    }
+    .wheel {
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      border: 5px solid #333;
+      position: relative;
+      overflow: hidden;
+      transform: rotate(0deg);
+      transition: transform 3s ease-out;
+    }
+    .slice {
+      position: absolute;
+      width: 150px;
+      height: 300px;
+      background-color: #e67e22;
+      transform-origin: 100% 50%;
+      clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
+    }
+    .slice:nth-child(odd) { background-color: #3498db; }
+    .slice:nth-child(even) { background-color: #e67e22; }
+    .slice div {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%) rotate(0deg);
+      color: white;
+      font-weight: bold;
+    }
+    .arrow {
+      width: 0;
+      height: 0;
+      border-left: 20px solid transparent;
+      border-right: 20px solid transparent;
+      border-bottom: 30px solid red;
+      margin-top: -15px;
+      margin-bottom: 20px;
+    }
+    #spinButton {
+      padding: 10px 20px;
+      font-size: 18px;
+      cursor: pointer;
+      border: none;
+      color: #fff;
+      background-color: #2980b9;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+    #spinButton:hover {
+      background-color: #1f5f7c;
+    }
+  </style>
+</head>
+<body>
+  <h1>Breakfast with!</h1>
+  <div class="arrow"></div>
+  <div id="wheel" class="wheel">
+    <div class="slice" style="transform: rotate(0deg);"><div>Batman</div></div>
+    <div class="slice" style="transform: rotate(60deg);"><div>Alya</div></div>
+    <div class="slice" style="transform: rotate(120deg);"><div>Gay Friend</div></div>
+    <div class="slice" style="transform: rotate(180deg);"><div>Nobody</div></div>
+    <div class="slice" style="transform: rotate(240deg);"><div>Vika</div></div>
+    <div class="slice" style="transform: rotate(300deg);"><div>Opel</div></div>
+  </div>
+  <button id="spinButton">Spin</button>
+
+  <script>
+    const wheel = document.getElementById('wheel');
+    const spinButton = document.getElementById('spinButton');
+    let isSpinning = false; // Prevent multiple clicks during spin
+
+    spinButton.addEventListener('click', () => {
+      if (isSpinning) return; // If already spinning, ignore further clicks
+      isSpinning = true;
+
+      // Set the randomDegree to land on Prize 1
+      const prize1Degree = Math.floor(Math.random() * 60) + 360 * 5;
+      wheel.style.transition = 'transform 3s ease-out';
+      wheel.style.transform = `rotate(${prize1Degree}deg)`;
+
+      setTimeout(() => {
+        alert(`Congratulations! You won Alya`);
+        // Reset for the next spin
+        wheel.style.transition = 'none';
+        wheel.style.transform = 'rotate(0deg)';
+        isSpinning = false; // Allow for another spin
+      }, 3000);
+    });
+  </script>
+</body>
+</html>
